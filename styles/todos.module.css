@@ -1,0 +1,86 @@
+.todosContainer {
+  height: 100vh;
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.todosContainerHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.searchContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.search {
+  width: 782px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 25px;
+  border: 2px solid;
+  border-color: #e0e0e0;
+  border-style: inset;
+}
+
+.select {
+  -webkit-appearance: none;
+  background-color: #fff;
+  outline: none;
+  border: 0;
+  color: #000;
+  text-align: center;
+  color: #499557;
+  font-size: medium;
+}
+.wrapper {
+  width: 1060px;
+  margin: 0 auto;
+}
+
+.createTodo {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #3d82eb;
+}
+.todoButton {
+  text-decoration: none;
+  padding: 0;
+  border: none;
+  background: none;
+}
+.todoItemContainer {
+  display: flex;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 10px 5px;
+}
+
+.contentContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 5px;
+}
+
+.inputDateContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 16px;
+}
+.inputDateContainer input {
+  background-color: #fff;
+  color: #000;
+}
+
+.inputText {
+  border: none;
+  outline: none;
+}
