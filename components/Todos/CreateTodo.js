@@ -12,6 +12,7 @@ const CreateTodo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(dateTime);
     const response = await fetch("/api/todos", {
       method: "POST",
       headers: {
@@ -19,10 +20,11 @@ const CreateTodo = () => {
       },
       body: JSON.stringify({
         title,
-        createdAt: dateTime,
+        dueDate: dateTime,
       }),
     });
     const todo = await response.json();
+    console.log(todo);
     setTitle("");
     setDateTime("");
   };

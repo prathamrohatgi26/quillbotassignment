@@ -8,10 +8,13 @@ export default async (req, res) => {
 
   // add search logic
   if (req.method === "POST") {
-    const { title, createdAt } = req.body;
+    const { title, dueDate } = req.body;
     const todo = await Todo.create({
       title,
-      createdAt,
+      createdAt: Date.now(),
+      dueDate,
+      completed: false,
+      isStarred: false,
     });
     res.status(201).json(todo);
   }

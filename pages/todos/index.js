@@ -12,11 +12,15 @@ import del from "../../public/assets/icons/delete-1.svg";
 import delActive from "../../public/assets/icons/delete.svg";
 import star from "../../public/assets/icons/Vector.svg";
 import starActive from "../../public/assets/icons/Vector-1.svg";
+import duplicate from "../../public/assets/icons/XMLID 7.svg";
+import duplicateActive from "../../public/assets/icons/XMLID 8.svg";
+import starTodo from "../../utils/todos/starTodo";
 
 export default function Todos() {
   const [todos, setTodos] = React.useState([]);
-  const [showOptions, setShowOptions] = useState(false);
+  const [showOptions, setShowOptions] = useState("");
   const [isHovered, setIsHovered] = useState("");
+  // const [updatedDb,setUPdatedDb] = useState()
 
   React.useEffect(() => {
     getTodos().then((todos) => setTodos(todos));
@@ -27,33 +31,56 @@ export default function Todos() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
+  const handleStar = async (id) => {
+    const todo = todos.find((todo) => todo.id === id);
+    const response = await starTodo(id, !todo.isStarred);
+    setTodos(todos.map((todo) => (todo.id === id ? response : todo)));
+  };
+
   const handleComplete = async (id) => {
     const todo = todos.find((todo) => todo.id === id);
-    const response = await completeTodo(id, todo.completed);
-    const updatedTodo = await response.json();
-    setTodos(todos.map((todo) => (todo.id === id ? updatedTodo : todo)));
+    const response = await completeTodo(id, !todo.completed);
+    setTodos(todos.map((todo) => (todo.id === id ? response : todo)));
   };
+
   const getFormattedDate = (e) => {
     const myDate = new Date(e);
     const result = myDate.getTime();
-    console.log(result);
-    console.log(Date.now());
+
     if (result < Date.now()) {
       return true;
     }
     return false;
   };
 
+  // export from create todo later
+
+  const createDuplicateEntry = async (title, dueDate) => {
+    const response = await fetch("/api/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        dueDate,
+      }),
+    });
+    const todo = await response.json();
+    console.log(todo);
+    getTodos().then((todos) => setTodos(todos));
+  };
+
   return (
     <div className={styles.todosContainer}>
       <div className={styles.wrapper}>
         <div className={styles.todosContainerHead}>
-          <Image src={logo} />
+          <Image alt="logo" src={logo} />
           <h1>Todo List</h1>
         </div>
 
         {/* Search bar */}
-        <div className={styles.searchContainer}>
+        <div id="todo-search-bar" className={styles.searchContainer}>
           <div>
             <input
               className={styles.search}
@@ -64,7 +91,7 @@ export default function Todos() {
 
           {/* Sorting dropdown */}
           <div>
-            <select required className={styles.select}>
+            <select id="todo-sort-dropdown" required className={styles.select}>
               <option
                 className={styles.headSelect}
                 value=""
@@ -77,11 +104,24 @@ export default function Todos() {
               <option disabled={true} value="">
                 --Choose and option--
               </option>
-              <option value="title">Title (⬆)</option>
-              <option value="title">Title (⬇)</option>
-              <option value="createdAt">Due Date (⬆)</option>
-              <option value="createdAt">Due Date (⬇)</option>
-              <option value="createdAt">Created Date (⬇)</option>
+              <option id="todo-sort-dropdown__title-ascending" value="title">
+                Title (⬆)
+              </option>
+              <option id="todo-sort-dropdown__title-descending" value="title">
+                Title (⬇)
+              </option>
+              <option id="todo-sort-dropdown__due-date-ascending" value="date">
+                Due Date (⬆)
+              </option>
+              <option id="todo-sort-dropdown__due-date-descending" value="date">
+                Due Date (⬇)
+              </option>
+              <option
+                id="todo-sort-dropdown__created-date-descending"
+                value="createdAt"
+              >
+                Created Date (⬇)
+              </option>
             </select>
           </div>
           <div className={styles.actLog}>
@@ -90,11 +130,11 @@ export default function Todos() {
         </div>
 
         <section className={styles.todoListContainer}>
-          {todos.map((todo) => {
+          {todos.map((todo, i) => {
             return (
               <div
                 className={
-                  getFormattedDate(todo.createdAt)
+                  getFormattedDate(todo.dueDate)
                     ? `${styles.todoItem} ${styles.todoOverdue}`
                     : `${styles.todoItem}`
                 }
@@ -105,30 +145,71 @@ export default function Todos() {
               >
                 <div className={styles.todoTick}>
                   <button
-                    onMouseEnter={() => setIsHovered("check")}
+                    onMouseEnter={() => setIsHovered(`check` + `${i}`)}
                     onMouseLeave={() => setIsHovered("")}
                     onClick={() => handleComplete(todo.id)}
                   >
-                    <Image src={isHovered === "check" ? checkActive : check} />
+                    <Image
+                      alt="check"
+                      src={
+                        isHovered === `check` + `${i}` || todo.completed
+                          ? checkActive
+                          : check
+                      }
+                    />
                   </button>
-                  <p onClick={() => setShowOptions(!showOptions)}>
+                  <p
+                    onClick={() =>
+                      showOptions === todo.id
+                        ? setShowOptions("")
+                        : setShowOptions(todo.id)
+                    }
+                  >
                     {todo.title}
                   </p>
                 </div>
-                {showOptions && (
+                {showOptions === todo.id && (
                   <div className={styles.listIcons}>
                     <button
-                      onMouseEnter={() => setIsHovered("star")}
+                      id="todo-duplicate-button__${todo_id}"
+                      onMouseEnter={() => setIsHovered(`duplicate` + `${i}`)}
                       onMouseLeave={() => setIsHovered("")}
+                      onClick={() =>
+                        createDuplicateEntry(todo.title, todo.dueDate)
+                      }
                     >
-                      <Image src={isHovered === "star" ? starActive : star} />
+                      <Image
+                        alt="dup"
+                        src={
+                          isHovered === `duplicate` + `${i}`
+                            ? duplicateActive
+                            : duplicate
+                        }
+                      />
                     </button>
                     <button
-                      onMouseEnter={() => setIsHovered("del")}
+                      onMouseEnter={() => setIsHovered(`star` + `${i}`)}
+                      onMouseLeave={() => setIsHovered("")}
+                      onClick={() => handleStar(todo.id)}
+                    >
+                      <Image
+                        alt="star"
+                        src={
+                          isHovered === `star` + `${i}` || todo.isStarred
+                            ? starActive
+                            : star
+                        }
+                      />
+                    </button>
+                    <button
+                      onMouseEnter={() => setIsHovered(`del` + `${i}`)}
                       onMouseLeave={() => setIsHovered("")}
                       onClick={() => handleDelete(todo.id)}
                     >
-                      <Image src={isHovered === "del" ? delActive : del} />
+                      <Image
+                        alt="delete"
+                        src={isHovered === `del` + `${i}` ? delActive : del}
+                      />
                     </button>
                   </div>
                 )}

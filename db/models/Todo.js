@@ -16,7 +16,17 @@ const Todo = db.define("Todo", {
     allowNull: false,
     defaultValue: DataTypes.NOW,
   },
+  dueDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
   completed: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  isStarred: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,

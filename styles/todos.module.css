@@ -11,11 +11,14 @@
   align-items: center;
   gap: 10px;
 }
-
+.todoListContainer {
+  display: flex;
+}
 .searchContainer {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  justify-content: space-between;
 }
 .search {
   width: 782px;
@@ -38,7 +41,6 @@
   font-size: medium;
 }
 .wrapper {
-  width: 1060px;
   margin: 0 auto;
 }
 
@@ -65,6 +67,7 @@
   background-color: #fff;
   margin: 2px 0px;
   padding: 2px 0;
+  padding-right: 5px;
 }
 
 .todoListContainer {
@@ -74,7 +77,7 @@
 }
 
 .todoTick p {
-  min-width: 400px;
+  min-width: 900px;
 }
 
 .todoOverdue {
@@ -91,4 +94,45 @@
 
 .actLog {
   color: #3d82eb;
+}
+
+@media only screen and (max-width: 1200px) {
+  .search {
+    width: 800px;
+  }
+}
+@media only screen and (max-width: 1050px) {
+  .search {
+    width: 670px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .search {
+    width: 600px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .search {
+    width: 550px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .search {
+    width: 500px;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .search {
+    width: 400px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .search {
+    width: 280px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .search {
+    width: 230px;
+  }
 }

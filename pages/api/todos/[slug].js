@@ -9,9 +9,14 @@ export default async function handler(req, res) {
   }
   if (req.method === "PATCH") {
     const { slug } = req.query;
-    const { completed } = req.body;
+    const { completed, isStarred } = req.body;
     const todo = await Todo.findByPk(slug);
-    todo.completed = completed;
+    if (isStarred != null) {
+      todo.isStarred = isStarred;
+    }
+    if (completed != null) {
+      todo.completed = completed;
+    }
     await todo.save();
     res.status(200).json(todo);
   }

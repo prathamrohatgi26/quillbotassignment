@@ -5,7 +5,7 @@ export default async (req, res) => {
   for (let i = 0; i < modelNames.length; i++) {
     const modelName = modelNames[i];
     const model = await models[modelName];
-    await model.sync();
+    await model.sync({ force: true });
   }
   res.status(200).json({});
 };

@@ -40,3 +40,29 @@
   border: none;
   outline: none;
 }
+
+@media only screen and (max-width: 1200px) {
+  .todoItemContainer {
+    width: 800px;
+  }
+}
+@media only screen and (max-width: 1050px) {
+  .todoItemContainer {
+    width: 600px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .todoItemContainer {
+    width: 550px;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .search {
+    width: 350px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .search {
+    width: 200px;
+  }
+}

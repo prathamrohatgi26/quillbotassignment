@@ -1,14 +1,14 @@
-const completeTodo = async (id, currentCompletionStatus) => {
+const starTodo = async (id, currentStarStatus) => {
   const response = await fetch(`/api/todos/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      completed: currentCompletionStatus,
+      isStarred: currentStarStatus,
     }),
   });
   return await response.json();
 };
 
-export default completeTodo;
+export default starTodo;
