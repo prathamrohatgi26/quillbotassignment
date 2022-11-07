@@ -1,0 +1,42 @@
+.createTodo {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #3d82eb;
+}
+.todoButton {
+  text-decoration: none;
+  padding: 0;
+  border: none;
+  background: none;
+}
+.todoItemContainer {
+  display: flex;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 10px 5px;
+}
+
+.contentContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 5px;
+}
+
+.inputDateContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 16px;
+}
+.inputDateContainer input {
+  background-color: #fff;
+  color: #000;
+}
+
+.inputText {
+  border: none;
+  outline: none;
+}

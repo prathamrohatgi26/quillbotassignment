@@ -4,7 +4,7 @@ import tick from "../../public/assets/icons/tick.svg";
 import wrong from "../../public/assets/icons/wrong.svg";
 import start from "../../public/assets/icons/short_text.svg";
 import Image from "next/image";
-import styles from "../../styles/todos.module.css";
+import styles from "../../styles/createTodo.module.css";
 
 const CreateTodo = () => {
   const [title, setTitle] = useState("");
@@ -24,6 +24,7 @@ const CreateTodo = () => {
     });
     const todo = await response.json();
     setTitle("");
+    setDateTime("");
   };
   const [show, setShow] = useState(false);
 
@@ -41,11 +42,12 @@ const CreateTodo = () => {
                     type="text"
                     placeholder="Enter Todo Title"
                     value={title}
-                    required
                     onChange={(e) => setTitle(e.target.value)}
+                    required
                   />
                 </form>
                 <input
+                  className={styles.inputDate}
                   value={dateTime}
                   type={"datetime-local"}
                   onChange={(e) => setDateTime(e.target.value)}
